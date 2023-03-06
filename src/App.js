@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, {useState} from "react";
+import Layoffs from "./components/Layoffs/Layoffs";
+import NewLayoff from "./components/NewLayoff/NewLayoff";
+const DUMMY_DATA = [{
+  company: "Sleep",
+  location: "New York City",
+  "count": 8,
+  "country": "United States",
+  date: new Date("2023-02-07")
+}, {
+  "company": "Breakfast",
+  "location": "Sao Paulo",
+  "count": 1,
+  "country": "Brazil",
+  "date": new Date("2023-02-07")
+}];
 function App() {
+  const [layoffs, setLayoffs] = useState(DUMMY_DATA);
+
+  const addLayoffHandler = layoff => {
+    // console.log("IN App js")
+    // console.log(layoff);
+    setLayoffs(prevLayoffs => {
+      return [layoff, ...layoffs];
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewLayoff onAddLayoff={addLayoffHandler} />
+      <Layoffs items={layoffs}/>
     </div>
   );
 }
